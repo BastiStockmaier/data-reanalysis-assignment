@@ -10,13 +10,19 @@ output: html_document
 Animals living with kin and nonkin should make social decisions based on the consequences for both direct and indirect fitness. Common vampire bats invest in stable cooperative relationships that benefit both components of inclusive fitness. To disentangle these two factors, the authors conducted two types of playback trials using a group of captive vampire bats with mixed kinship and varying rates of dyadic food sharing histories. Individuals were presented with two speakers in maze trials. Speakers played contact calls from different familiar conspecifics. In Experiment 1 (Past donor trials), 15 bats had to choose between between calls recorded from either a frequent or rare food donor, but both "callers" were related to a similar degree with the subject. In Experiment 2, 31 vampire bats had to choose between calls recorded from either a close or a distant relative, but both callers were matched for food-sharing history with the subject. The authors found that vampire bats were attracted to contact calls of frequent donors when controlling for kinship, but not to calls of kin when controlling for food sharing history. In addidion, respose and acoustic analysis suggest that bats recognized individuals from vocalizations. Together the results of the study corroborate prior observations in vampire bats that prior food sharing can overshadow relatedness in determining the social decisions of vampire bats. 
 
 # Short description of the Methods (Playback experiment).
-A subject bat was placed in a maze (see below) with five arms that allowed the subject to move forwards, backward, left, right or upwards. The bat was placed in the arm farthest from the camera, equidistant to the two speakers. After moving forward it could enter the arms to the left or right, wieh each option leading towards a speaker simultaneously playing calls from either a control bat or a test bat. The bat could also more straight backwards or forwards away from either speaker, or climb upwards, which bats typically do as an escape response. Those options allowed to remove cases where bats where not motivated.
+A subject bat was placed in a maze (see below) with five arms that allowed the subject to move forwards, backward, left, right or upwards. The bat was placed in the arm farthest from the camera, equidistant to the two speakers. After moving forward it could enter the arms to the left or right, wieh each option leading towards a speaker simultaneously playing calls from either a control bat or a test bat. The bat could also more straight backwards or forwards away from either speaker, or climb upwards, which bats typically do as an escape response. Those options allowed to remove cases where bats where not motivated. Each trial lasted 10 minutes. If the bat didn't make a choice in the first trial, the trial was discarded and a new trial began. Stimuli were presented on the left or right randomly. Maze was rotated 90 degree clockwise between each trial and the two trial types were presented on a random schedule to prevent order effects.
 
-<img src="img/"
-
+<img src="img/maze.jpg", width="200px"
+Figure 1: Playback maze
 
 ## Experiment 1 (Past donor)
+Subject with a history of food sharing (N= 12 females, 3 males) was presented with choice between approaching contact calls from a frequent donor (test) and an infrequent donor or nondonor (control). Test and control bats differed in food donation rates but were matched by age and kinship. 
 
+## Experiment 2 (Kinship)
+Subject (N = 12 females, 19 males) was presented with a choice between contact calls from a close relative (test) and a distant or non-relative (control). Test and control bats differed in their pairwise kinship with the subject but they were closely matched wherever possible by age and past food sharing experience. 
+
+
+In the following I will mainly focus on the playback response analysis. 
 
 
 
