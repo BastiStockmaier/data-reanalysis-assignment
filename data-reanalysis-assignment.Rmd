@@ -139,6 +139,7 @@ Given the results provided (permutation:p) it seems like the authors calculate t
 
 ```{r}
 p<-paired.perm.test(donor.durations, n.perm=5000)
+p
 ```
 Note again that this p-value most likely won't resemble the one presented in the paper (0.0014). This is due to the random process of permutation.
 
@@ -158,7 +159,8 @@ Compare<-rbind(Results.paper, My.results)
 colnames(Compare)<-c("N", "lower CI", "upper CI", "permuted.p", "Wilcox.p")
 Compare
 ```
-        
+Generally, it seems like the results are comparable to the ones reported in the article. The permuted p-value deviates because of the random nature of permutations created by the permutation t-test. I have run it repeatedly and it is always highly significant showing that the mean of 51.4 seconds significantly deviates from 0 and that bats spend a significant proportion of their time in the test-arm. I wonder if it would be sufficient to repeat the permutation test x-times to create a high number of p-values, determine their distribution and show how many of them fall below alpha = 0.05. The p-value of my wilcox test also slightly deviates from the one reported in the paper but is still highly significant. 
+
         
         
         
