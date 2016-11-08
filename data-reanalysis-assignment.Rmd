@@ -95,7 +95,7 @@ Figure 2: Results of playback tests showing (a) the difference in time spent in 
 # Analysis
 As mentioned above, I will focus on analyzing the response to the playback analysis. I will split up the analysis in the past donor experiment and the kin experiment.
 
-## Past donor experiment analysis
+## Past donor experiment analysis - duration
 I want to start with some visual and descriptive analysis.
 When looking at the graph showing the duration each bat spend in the test vs control arm it looks like the majority of datapoints (bats) lay in the positive upper half of the plot (above 0). 
 
@@ -131,6 +131,7 @@ donor.durations<-donors$duration # create a vector with the data to be bootstrap
 donor.durations
 donor.duration.boot<-boot(donor.durations, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
 ci<-boot.ci(donor.duration.boot) # calculate 95 % CI
+ci
 ```
 The authors show a 95% CI for this mean their paper (12-91s). This comes close to our calculation using the default option for calculating CI's in the package "boot", which uses a normal approximation. Since bootstrapping is a random process, these results will slightly change every time the function is executed. To make this result reproducab
 
@@ -153,14 +154,47 @@ pw
 
 ### Past donor experiment - duration, summary of the results
 ```{r}
-Results.paper<-c(15, 12,91,0.0014,0.005)
-My.results<-c(length(donors$duration),ci$normal[2], ci$normal[3],p,pw$p.value)
-Compare<-rbind(Results.paper, My.results)
-colnames(Compare)<-c("N", "lower CI", "upper CI", "permuted.p", "Wilcox.p")
-Compare
+Results.paper<-c(51, 15, 12,91,0.0014,0.005)
+Results.analysis<-c(mean(donors$duration),length(donors$duration),ci$normal[2], ci$normal[3],p,pw$p.value)
+Comparison<-rbind(Results.paper, Results.analysis)
+colnames(Comparison)<-c("mean","N", "lower CI", "upper CI", "permuted.p", "Wilcox.p")
+Comparison
 ```
 Generally, it seems like the results are comparable to the ones reported in the article. The permuted p-value deviates because of the random nature of permutations created by the permutation t-test. I have run it repeatedly and it is always highly significant showing that the mean of 51.4 seconds significantly deviates from 0 and that bats spend a significant proportion of their time in the test-arm. I wonder if it would be sufficient to repeat the permutation test x-times to create a high number of p-values, determine their distribution and show how many of them fall below alpha = 0.05. The p-value of my wilcox test also slightly deviates from the one reported in the paper but is still highly significant. 
 
-        
-        
-        
+      
+I will now repeat the analysis for the donor experiment - latency, kinship experiment - duration, and kinship experiment - latency. However I will provide less explanation since the workflow through the analysis is very similar. 
+
+## Past donor experiment analysis - latency.
+
+```{r}
+mean.duration<-toString(mean(donors$latency))
+
+p<-ggplot(donors, aes(x=trial.type, y=latency))
+p<-p+geom_violin(scale="width", adjust=1.5,trim="TRUE",color="darkgreen",fill="darkolivegreen2")
+p<-p+geom_jitter(aes(color=subject.sex),width=0.25)
+p<-p+geom_hline(yintercept=0, size=0.5,linetype=5)
+p<-p+labs(y="Time in test arm - control arm (s)", x="")
+p<-p+theme_bw()
+p<-p+stat_summary(fun.y=mean, color="darkred", geom="point", size=5)
+p<-p+annotate("text", x=1, y=-140, label=mean.duration)
+p  
+
+donor.latency<-donors$latency # create a vector with the data to be bootstrapped
+donor.latency
+donor.latency.boot<-boot(donor.latency, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
+ci<-boot.ci(donor.latency.boot) # calculate 95 % CI
+ci
+p<-paired.perm.test(donor.latency, n.perm=5000) # permutation paired t-test
+p
+pw<-wilcox.test(donor.latency, alternative="less", mu=0, correct=TRUE) # wilcoxon signed-rank test
+pw
+
+Results.paper<-c(-184, 15, -331, -42,0.0066,0.025)
+Results.analysis<-c(mean(donors$latency),length(donors$latency),ci$normal[2], ci$normal[3],p,pw$p.value)
+Comparison<-rbind(Results.paper, Results.analysis)
+colnames(Comparison)<-c("mean","N", "lower CI", "upper CI", "permuted.p", "Wilcox.p")
+Comparison
+```
+
+
