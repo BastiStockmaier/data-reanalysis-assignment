@@ -1,0 +1,10 @@
+---
+title: "data-reanalysis-assignment"
+author: "Sebastian"
+date: "Tuesday, November 08, 2016"
+output: html_document
+---
+
+# Short description of the Study
+
+Animals living with kin and nonkin should make social decisions based on the consequences for both direct and indirect fitness. Common vampire bats invest in stable cooperative relationships that benefit both components of inclusive fitness. To disentangle these two factors, the authors conducted two types of playback trials using a group of captive vampire bats. 
