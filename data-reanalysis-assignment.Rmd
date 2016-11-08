@@ -7,4 +7,11 @@ output: html_document
 
 # Short description of the Study
 
-Animals living with kin and nonkin should make social decisions based on the consequences for both direct and indirect fitness. Common vampire bats invest in stable cooperative relationships that benefit both components of inclusive fitness. To disentangle these two factors, the authors conducted two types of playback trials using a group of captive vampire bats with mixed kinship and varying rates of dyadic food sharing. Individuals were presented with two speakers in maze trials. Speakers played contact calls from different familiar conspecifics. In Experiment 1 (Past donor trials), 15 bats had to choose between between calls recorded from either a frequent or rare food donor, but both "callers" were related to a similar degree with the subject. In Experiment 2 
+Animals living with kin and nonkin should make social decisions based on the consequences for both direct and indirect fitness. Common vampire bats invest in stable cooperative relationships that benefit both components of inclusive fitness. To disentangle these two factors, the authors conducted two types of playback trials using a group of captive vampire bats with mixed kinship and varying rates of dyadic food sharing histories. Individuals were presented with two speakers in maze trials. Speakers played contact calls from different familiar conspecifics. In Experiment 1 (Past donor trials), 15 bats had to choose between between calls recorded from either a frequent or rare food donor, but both "callers" were related to a similar degree with the subject. In Experiment 2, 31 vampire bats had to choose between calls recorded from either a close or a distant relative, but both callers were matched for food-sharing history with the subject. The authors found that vampire bats were attracted to contact calls of frequent donors when controlling for kinship, but not to calls of kin when controlling for food sharing history. In addidion, respose and acoustic analysis suggest that bats recognized individuals from vocalizations. Together the results of the study corroborate prior observations in vampire bats that prior food sharing can overshadow relatedness in determining the social decisions of vampire bats. 
+
+# Short description of the Methods (Playback experiment).
+
+
+
+
+
