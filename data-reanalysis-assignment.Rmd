@@ -22,6 +22,7 @@ Subject with a history of food sharing (N= 12 females, 3 males) was presented wi
 Subject (N = 12 females, 19 males) was presented with a choice between contact calls from a close relative (test) and a distant or non-relative (control). Test and control bats differed in their pairwise kinship with the subject but they were closely matched wherever possible by age and past food sharing experience. 
 
 
+### Response variables for both experiments
 In the following, I will mainly focus on the playback response analysis. The responses were measured by observers that were blind to the the playback treatments and design. The two response variables are differences between test and control (test-control). 
 
 (1) Duration: Number of seconds that bats spend in either the control or the test arm. Response variables for analysis is therefore: Duration spend in test arm - Duration spend in control arm. If positive the bat spend more time in the test arm, if negative, the bat spend more time in the control arm.
@@ -91,7 +92,52 @@ For comparison I will attach the original figure to this file:
 
 Figure 2: Results of playback tests showing (a) the difference in time spent in each arm and (b) the difference in latency to enter each arm for male (blue) and female (red) vampire bats in response to calls from frequent food donors (donor test) and close relatives (kinship test). Shading shows the probability density function. Results remained the same with or without the two outliers in (a). Adapted from Carter & Wilkinson 2016. 
 
-        
+# Analysis
+As mentioned above, I will focus on analyzing the response to the playback analysis. I will split up the analysis in the past donor experiment and the kin experiment.
+
+## Past donor experiment analysis
+I want to start with some visual and descriptive analysis.
+When looking at the graph showing the duration each bat spend in the test vs control arm it looks like the majority of datapoints (bats) lay in the positive upper half of the plot (above 0). 
+
+```{r}
+mean.duration<-toString(mean(donors$duration))
+
+p<-ggplot(donors, aes(x=trial.type, y=duration))
+p<-p+geom_violin(scale="width", adjust=1.5,trim="TRUE",color="darkgreen",fill="darkolivegreen2")
+p<-p+geom_jitter(aes(color=subject.sex),width=0.25)
+p<-p+geom_hline(yintercept=0, size=0.5,linetype=5)
+p<-p+labs(y="Time in test arm - control arm (s)", x="")
+p<-p+theme_bw()
+p<-p+stat_summary(fun.y=mean, color="darkred", geom="point", size=5)
+p<-p+annotate("text", x=1, y=70, label=mean.duration)
+p
+```
+It looks like bats spend more time in the test arm (past frequent food donor) compared to the control arm and are thus more attracted to contact calls from bats that donated blood in the past. The authors report that bats in this test spend on average 51 s longer in the test arm then in the control arm (see mean in plot). 
+
+The Authors state that the response data was non-normal which is why they used a bootstrapping approach. A bootstapping approach does not asume an underlying distribution. In the following I will:
+(1) show the distribution of the response data in a histogram
+(2) write a function for a mean calculation used in the boot package to bootstrap the durations 5000 times (this function will be used later for the other analysis)
+(3) bootstrap and calculate the confidence intervals using the package "boot"
+
+```{r}
+hist(donors$duration) # distribution of response data
+my.mean<-function(x,i){ # function to calculate means repeatedly
+  return(mean(x[i]))
+}
+donor.durations<-donors$duration # create a vector with the data to be bootstrapped
+donor.durations
+donor.duration.boot<-boot(donor.durations, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
+boot.ci(donor.duration.boot) # calculate 95 % CI
+```
+The authors show a 95% CI for this mean of 12-91 seconds in their paper. This comes close to our calculation using the default option for calculating CI's in the package "boot" which uses a normal approximation. Since bootstrapping is a random process these results will slightly change every time the function is executed. This can be prevented by using the set.seed(123) function. 
+
+
+
+
+
+
+
+
         
         
         
