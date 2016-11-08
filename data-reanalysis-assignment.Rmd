@@ -163,23 +163,25 @@ Comparison
 Generally, it seems like the results are comparable to the ones reported in the article. The permuted p-value deviates because of the random nature of permutations created by the permutation t-test. I have run it repeatedly and it is always highly significant showing that the mean of 51.4 seconds significantly deviates from 0 and that bats spend a significant proportion of their time in the test-arm. I wonder if it would be sufficient to repeat the permutation test x-times to create a high number of p-values, determine their distribution and show how many of them fall below alpha = 0.05. The p-value of my wilcox test also slightly deviates from the one reported in the paper but is still highly significant. 
 
       
-I will now repeat the analysis for the donor experiment - latency, kinship experiment - duration, and kinship experiment - latency. However I will provide less explanation since the workflow through the analysis is very similar. 
+I will now repeat the analysis for the donor experiment - latency, kinship experiment - duration, and kinship experiment - latency. However I will provide less explanation since the workflow through these analysis is very similar. 
 
 ## Past donor experiment analysis - latency.
 
 ```{r}
-mean.duration<-toString(mean(donors$latency))
+mean.duration<-round(mean(donors$latency), digits=1)
+mean.duration<-toString(mean.duration)
 
 p<-ggplot(donors, aes(x=trial.type, y=latency))
 p<-p+geom_violin(scale="width", adjust=1.5,trim="TRUE",color="darkgreen",fill="darkolivegreen2")
 p<-p+geom_jitter(aes(color=subject.sex),width=0.25)
 p<-p+geom_hline(yintercept=0, size=0.5,linetype=5)
-p<-p+labs(y="Time in test arm - control arm (s)", x="")
+p<-p+labs(y="Latency to enter test arm - control arm (s)", x="")
 p<-p+theme_bw()
 p<-p+stat_summary(fun.y=mean, color="darkred", geom="point", size=5)
-p<-p+annotate("text", x=1, y=-140, label=mean.duration)
+p<-p+annotate("text", x=1, y=-140, label=mean.duration, fontface="bold")
 p  
 
+hist(donors$latency)
 donor.latency<-donors$latency # create a vector with the data to be bootstrapped
 donor.latency
 donor.latency.boot<-boot(donor.latency, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
@@ -196,5 +198,72 @@ Comparison<-rbind(Results.paper, Results.analysis)
 colnames(Comparison)<-c("mean","N", "lower CI", "upper CI", "permuted.p", "Wilcox.p")
 Comparison
 ```
+This result shows that the subjects entered the test arm on average 184s sooner! The authors and I are confident that the calculated mean value falls between -331 and -38 in 95% of the cases. Both, the permutation t-test and the more conservative wilcox.test show highly significant one-sided p-values (lower tail, and against the H0 that the mean is 0).
+
+Now let's look at the kinship experiment....
 
 
+## Kinship experiment analysis - duration
+
+```{r}
+mean.duration<-round(mean(kin$duration), digits=1)
+mean.duration<-toString(mean.duration)
+
+p<-ggplot(kin, aes(x=trial.type, y=duration))
+p<-p+geom_violin(scale="width", adjust=1.5,trim="TRUE",color="darkgreen",fill="darkolivegreen2")
+p<-p+geom_jitter(aes(color=subject.sex),width=0.25)
+p<-p+geom_hline(yintercept=0, size=0.5,linetype=5)
+p<-p+labs(y="Time in test arm - control arm (s)", x="")
+p<-p+theme_bw()
+p<-p+stat_summary(fun.y=mean, color="darkred", geom="point", size=5)
+p<-p+annotate("text", x=1, y=30, label=mean.duration,fontface="bold")
+p  
+
+hist(kin$duration)
+kin.duration<-kin$duration # create a vector with the data to be bootstrapped
+kin.duration
+kin.duration.boot<-boot(kin.duration, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
+ci<-boot.ci(kin.duration.boot) # calculate 95 % CI
+ci
+p<-paired.perm.test(kin.duration, n.perm=5000) # permutation paired t-test
+p
+
+Results.paper<-c(0,31,-13, 33,0.192)
+Results.analysis<-c(mean(kin$duration),length(kin$duration),ci$normal[2], ci$normal[3],p)
+Comparison<-rbind(Results.paper, Results.analysis)
+colnames(Comparison)<-c("mean","N", "lower CI", "upper CI", "permuted.p")
+Comparison 
+```
+This result shows that subjects in kinship trials did not significantly spend longer in the test arm with calls from kin, compared to the control arm with calls from nonkin (accept H0 that there is no difference between attraction to kin vs nonkin calls). I did not run a wilcox.test in this case since the sample size is >20. 
+
+## Kinship experiment analysis - latency
+
+```{r}
+mean.latency<-round(mean(kin$latency), digits=1)
+mean.duration<-toString(mean.latency)
+
+p<-ggplot(kin, aes(x=trial.type, y=duration))
+p<-p+geom_violin(scale="width", adjust=1.5,trim="TRUE",color="darkgreen",fill="darkolivegreen2")
+p<-p+geom_jitter(aes(color=subject.sex),width=0.25)
+p<-p+geom_hline(yintercept=0, size=0.5,linetype=5)
+p<-p+labs(y="Time in test arm - control arm (s)", x="")
+p<-p+theme_bw()
+p<-p+stat_summary(fun.y=mean, color="darkred", geom="point", size=5)
+p<-p+annotate("text", x=1, y=30, label=mean.duration,fontface="bold")
+p  
+
+hist(kin$duration)
+kin.duration<-kin$duration # create a vector with the data to be bootstrapped
+kin.duration
+kin.duration.boot<-boot(kin.duration, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
+ci<-boot.ci(kin.duration.boot) # calculate 95 % CI
+ci
+p<-paired.perm.test(kin.duration, n.perm=5000) # permutation paired t-test
+p
+
+Results.paper<-c(0,31,-13, 33,0.192)
+Results.analysis<-c(mean(kin$duration),length(kin$duration),ci$normal[2], ci$normal[3],p)
+Comparison<-rbind(Results.paper, Results.analysis)
+colnames(Comparison)<-c("mean","N", "lower CI", "upper CI", "permuted.p")
+Comparison 
+```
