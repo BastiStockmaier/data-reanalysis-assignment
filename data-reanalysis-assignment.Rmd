@@ -22,10 +22,52 @@ Subject with a history of food sharing (N= 12 females, 3 males) was presented wi
 Subject (N = 12 females, 19 males) was presented with a choice between contact calls from a close relative (test) and a distant or non-relative (control). Test and control bats differed in their pairwise kinship with the subject but they were closely matched wherever possible by age and past food sharing experience. 
 
 
-In the following I will mainly focus on the playback response analysis. 
+In the following, I will mainly focus on the playback response analysis. The responses were measured by observers that were blind to the the playback treatments and design. The two response variables are differences between test and control (test-control). 
+
+(1) Duration: Number of seconds that bats spend in either the control or the test arm. Response variables for analysis is therefore: Duration spend in test arm - Duration spend in control arm. If positive the bat spend more time in the test arm, if negative, the bat spend more time in the control arm.
+
+(2) Latency: The latency in seconds from the start of the trial until the bat first entered either the control or the test arm. If the bat never entered the arm, latency was scored 600 s (10 min trials). Response variable for analysis is therefore: Latency to enter test arm - Latency to enter control arm. 
+
+I will start with uploading the dataset provided by the authors and by installing and opening the required packages
+```{r}
+# required packages
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("curl")
+library(curl)
+install.packages("boot")
+library(boot)
+install.packages("plyr")
+library(plyr)
+install.packages("broman")
+library(broman)
+
+# Upload the dataset
+f<-curl("https://raw.githubusercontent.com/BastiStockmaier/data-reanalysis-assignment/master/playback_response_data.csv")
+dataset<-read.csv(f,header=TRUE, sep=",")
+```
+
+The response variables (duration, latency have long names) so I am going to change them using the "plyr" package.
+```{r}
+names(dataset)
+dataset<-rename(dataset,c("entered.test..control"="latency", "test.control.time.in.arm..s."="duration"))
+head(dataset)
+```
+
+Since there are two Experiments (past donor and kin) I will also split the dataset accordingly
+```{r}
+donors<-subset(dataset, trial.type=="donor")
+head(donors)
+kin<-subset(dataset,trial.type=="kin")
+head(kin)
+```
 
 
 
 
-
-
+        
+        
+        
+        
+        
+        
