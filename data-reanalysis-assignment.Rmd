@@ -130,7 +130,7 @@ my.mean<-function(x,i){ # function to calculate means repeatedly
 donor.durations<-donors$duration # create a vector with the data to be bootstrapped
 donor.durations
 donor.duration.boot<-boot(donor.durations, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
-boot.ci(donor.duration.boot) # calculate 95 % CI
+ci<-boot.ci(donor.duration.boot) # calculate 95 % CI
 ```
 The authors show a 95% CI for this mean their paper (12-91s). This comes close to our calculation using the default option for calculating CI's in the package "boot", which uses a normal approximation. Since bootstrapping is a random process, these results will slightly change every time the function is executed. To make this result reproducab
 
@@ -145,14 +145,19 @@ Note again that this p-value most likely won't resemble the one presented in the
 ### Past donor experiment - duration, more conservative Wilcoxon signed-rank test
 The authors state that resampling tests can be problematic when a sample is too small (<20, as in one of our cases) and therefore provide more conservative p-values using a non-parametric Wilcoxon signed rank test. I will also repeat this analysis. 
 
+```{r}
+pw<-wilcox.test(donor.durations, alternative="greater", mu=0, correct=TRUE)
+pw
+```
 
-
-
-
-
-
-
-
+### Past donor experiment - duration, summary of the results
+```{r}
+Results.paper<-c(15, 12,91,0.0014,0.005)
+My.results<-c(length(donors$duration),ci$normal[2], ci$normal[3],p,pw$p.value)
+Compare<-rbind(Results.paper, My.results)
+colnames(Compare)<-c("N", "lower CI", "upper CI", "permuted.p", "Wilcox.p")
+Compare
+```
         
         
         
