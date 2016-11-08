@@ -48,7 +48,7 @@ f<-curl("https://raw.githubusercontent.com/BastiStockmaier/data-reanalysis-assig
 dataset<-read.csv(f,header=TRUE, sep=",")
 ```
 
-The response variables (duration, latency have long names) so I am going to change them using the "plyr" package.
+The response variables (duration, latency) have long names, so I am going to change them using the "plyr" package.
 ```{r}
 names(dataset)
 dataset<-rename(dataset,c("entered.test..control"="latency", "test.control.time.in.arm..s."="duration"))
@@ -134,7 +134,7 @@ boot.ci(donor.duration.boot) # calculate 95 % CI
 ```
 The authors show a 95% CI for this mean their paper (12-91s). This comes close to our calculation using the default option for calculating CI's in the package "boot", which uses a normal approximation. Since bootstrapping is a random process, these results will slightly change every time the function is executed. To make this result reproducab
 
-### Past donor experiment - duration, calculation of one-sided p-values
+### Past donor experiment - duration, calculation of one-sided p-value
 Given the results provided (permutation:p) it seems like the authors calculate their one-sided p-values using a paired t-test (differences test-control) via permutations. This can be done with the "broman" package.
 
 ```{r}
