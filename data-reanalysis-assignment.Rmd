@@ -99,6 +99,8 @@ As mentioned above, I will focus on analyzing the response to the playback analy
 I want to start with some visual and descriptive analysis.
 When looking at the graph showing the duration each bat spend in the test vs control arm it looks like the majority of datapoints (bats) lay in the positive upper half of the plot (above 0). 
 
+
+### Past donor experiment - duration, descriptive stats
 ```{r}
 mean.duration<-toString(mean(donors$duration))
 
@@ -114,6 +116,7 @@ p
 ```
 It looks like bats spend more time in the test arm (past frequent food donor) compared to the control arm and are thus more attracted to contact calls from bats that donated blood in the past. The authors report that bats in this test spend on average 51 s longer in the test arm then in the control arm (see mean in plot). 
 
+### Past donor experiment - duration, bootstrapping and calculation of 95% CIs
 The Authors state that the response data was non-normal which is why they used a bootstrapping approach. A bootstapping approach does not asume an underlying distribution. In the following I will:
 (1) show the distribution of the response data in a histogram
 (2) write a function for a mean calculation used in the boot package to bootstrap the durations 5000 times (this function will be used later for the other analysis)
@@ -129,7 +132,19 @@ donor.durations
 donor.duration.boot<-boot(donor.durations, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
 boot.ci(donor.duration.boot) # calculate 95 % CI
 ```
-The authors show a 95% CI for this mean of 12-91 seconds in their paper. This comes close to our calculation using the default option for calculating CI's in the package "boot" which uses a normal approximation. Since bootstrapping is a random process these results will slightly change every time the function is executed. This can be prevented by using the set.seed(123) function. 
+The authors show a 95% CI for this mean their paper (12-91s). This comes close to our calculation using the default option for calculating CI's in the package "boot", which uses a normal approximation. Since bootstrapping is a random process, these results will slightly change every time the function is executed. To make this result reproducab
+
+### Past donor experiment - duration, calculation of one-sided p-values
+Given the results provided (permutation:p) it seems like the authors calculate their one-sided p-values using a paired t-test (differences test-control) via permutations. This can be done with the "broman" package.
+
+```{r}
+p<-paired.perm.test(donor.durations, n.perm=5000)
+```
+Note again that this p-value most likely won't resemble the one presented in the paper (0.0014). This is due to the random process of permutation.
+
+### Past donor experiment - duration, more conservative Wilcoxon signed-rank test
+The authors state that resampling tests can be problematic when a sample is too small (<20, as in one of our cases) and therefore provide more conservative p-values using a non-parametric Wilcoxon signed rank test. I will also repeat this analysis. 
+
 
 
 
