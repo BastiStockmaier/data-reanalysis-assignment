@@ -9,7 +9,17 @@ output: html_document
 
 Animals living with kin and nonkin should make social decisions based on the consequences for both direct and indirect fitness. Common vampire bats invest in stable cooperative relationships that benefit both components of inclusive fitness. To disentangle these two factors, the authors conducted two types of playback trials using a group of captive vampire bats with mixed kinship and varying rates of dyadic food sharing histories. Individuals were presented with two speakers in maze trials. Speakers played contact calls from different familiar conspecifics. In Experiment 1 (Past donor trials), 15 bats had to choose between between calls recorded from either a frequent or rare food donor, but both "callers" were related to a similar degree with the subject. In Experiment 2, 31 vampire bats had to choose between calls recorded from either a close or a distant relative, but both callers were matched for food-sharing history with the subject. The authors found that vampire bats were attracted to contact calls of frequent donors when controlling for kinship, but not to calls of kin when controlling for food sharing history. In addidion, respose and acoustic analysis suggest that bats recognized individuals from vocalizations. Together the results of the study corroborate prior observations in vampire bats that prior food sharing can overshadow relatedness in determining the social decisions of vampire bats. 
 
-## Short description of the Methods (Playback experiment).
+## Short description of the statistical analysis in the article
+
+(1) To quantify food sharing history the authors used a food sharing index from individual A to B, which they calculated as the ln(x-1), where x is the food sharing rate from A to B. The raw data for these calculations was no available.
+
+(2) Calculation of relatedness: The authors genotyped 19 microsatellite markers and used Wang's estimator in the R package "related". The raw genotype dataset was not available.
+
+(3) Acoustic Analysis of Playback Stimuli: A Set of linear discriminant functions, permutation tests applied to linear models using the lmPerm package and jackknifed linear discriminant function to determine if bats recognize individuals from vocalizations.
+
+(4) Playback response analysis: A playback response analysis described below. The authors performed bootstrapping of response variables to determine 95% confidence intervals, permuted paired t-test to determine statistically significant deviations from 0 and more conservative p-value estimations using Wilcoxon signed-rank tests for a subset of the data with lower sample size. I will try and repeat most of those analysis in this assignment. 
+
+## Short description of the Method (Playback experiment).
 A subject bat was placed in a maze (see below) with five arms that allowed the subject to move forwards, backward, left, right or upwards. The bat was placed in the arm farthest from the camera, equidistant to the two speakers. After moving forward it could enter the arms to the left or right, wieh each option leading towards a speaker simultaneously playing calls from either a control bat or a test bat. The bat could also more straight backwards or forwards away from either speaker, or climb upwards, which bats typically do as an escape response. Those options allowed to remove cases where bats where not motivated. Each trial lasted 10 minutes. If the bat didn't make a choice in the first trial, the trial was discarded and a new trial began. Stimuli were presented on the left or right randomly. Maze was rotated 90 degree clockwise between each trial and the two trial types were presented on a random schedule to prevent order effects.
 
 <img src="img/maze.jpg", width="200px"
@@ -267,4 +277,7 @@ Comparison<-rbind(Results.paper, Results.analysis)
 colnames(Comparison)<-c("mean","N", "lower CI", "upper CI", "permuted.p")
 Comparison 
 ```
-These results show that the subjects latency to enter either one of the test arms did not significantly differ. 
+These results show that the subjects latency to enter either one of the test arms did not significantly differ (accept H0). 
+
+
+Taken together these results indicate that Vampire bats are more attracted to contact calls of past donors as to contact calls of kin. The authors include a variety of controls into the analysis which are pretty much the same tests as shown above but excluding different individuals from the analysis. E.g they looked at attraction to the frequent donor once the excluded related individuals (nine trials). In all those controls the results remained unchanged. 
