@@ -240,30 +240,31 @@ This result shows that subjects in kinship trials did not significantly spend lo
 
 ```{r}
 mean.latency<-round(mean(kin$latency), digits=1)
-mean.duration<-toString(mean.latency)
+mean.latency<-toString(mean.latency)
 
-p<-ggplot(kin, aes(x=trial.type, y=duration))
+p<-ggplot(kin, aes(x=trial.type, y=latency))
 p<-p+geom_violin(scale="width", adjust=1.5,trim="TRUE",color="darkgreen",fill="darkolivegreen2")
 p<-p+geom_jitter(aes(color=subject.sex),width=0.25)
 p<-p+geom_hline(yintercept=0, size=0.5,linetype=5)
-p<-p+labs(y="Time in test arm - control arm (s)", x="")
+p<-p+labs(y="Latency to enter test arm - control arm (s)", x="")
 p<-p+theme_bw()
 p<-p+stat_summary(fun.y=mean, color="darkred", geom="point", size=5)
-p<-p+annotate("text", x=1, y=30, label=mean.duration,fontface="bold")
+p<-p+annotate("text", x=1, y=70, label=mean.latency,fontface="bold")
 p  
 
-hist(kin$duration)
-kin.duration<-kin$duration # create a vector with the data to be bootstrapped
-kin.duration
-kin.duration.boot<-boot(kin.duration, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
-ci<-boot.ci(kin.duration.boot) # calculate 95 % CI
+hist(kin$latency)
+kin.latency<-kin$latency # create a vector with the data to be bootstrapped
+kin.latency
+kin.latency.boot<-boot(kin.latency, my.mean, 5000) # bootstrapping of the vector to calculate 5000 sample means
+ci<-boot.ci(kin.latency.boot) # calculate 95 % CI
 ci
-p<-paired.perm.test(kin.duration, n.perm=5000) # permutation paired t-test
+p<-paired.perm.test(kin.latency, n.perm=5000) # permutation paired t-test
 p
 
-Results.paper<-c(0,31,-13, 33,0.192)
-Results.analysis<-c(mean(kin$duration),length(kin$duration),ci$normal[2], ci$normal[3],p)
+Results.paper<-c(0,31,-47, 114,1)
+Results.analysis<-c(mean(kin$latency),length(kin$latency),ci$normal[2], ci$normal[3],p)
 Comparison<-rbind(Results.paper, Results.analysis)
 colnames(Comparison)<-c("mean","N", "lower CI", "upper CI", "permuted.p")
 Comparison 
 ```
+These results show that the subjects latency to enter either one of the test arms did not significantly differ. 
