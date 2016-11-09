@@ -152,7 +152,9 @@ Given the results provided (permutation:p) it seems like the authors calculate t
 p<-paired.perm.test(donor.durations, n.perm=5000)
 p
 ```
-Note again that this p-value most likely won't resemble the one presented in the paper (0.0014). This is due to the random process of permutation.
+Note again that this p-value most likely won't resemble the one presented in the paper (0.0014). This is due to the random process of permutation. I was therefore interested what would happen if I'd repeat this test over and over again.
+
+
 
 ### Past donor experiment - duration, more conservative Wilcoxon signed-rank test
 The authors state that resampling tests can be problematic when a sample is too small (<20, as in one of our cases) and therefore provide more conservative p-values using a non-parametric Wilcoxon signed rank test. I will also repeat this analysis. 
