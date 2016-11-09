@@ -152,15 +152,32 @@ Given the results provided (permutation:p) it seems like the authors calculate t
 p<-paired.perm.test(donor.durations, n.perm=5000)
 p
 ```
-Note again that this p-value most likely won't resemble the one presented in the paper (0.0014). This is due to the random process of permutation. I was therefore interested what would happen if I'd repeat this test over and over again.
+Note again that this p-value most likely won't resemble the one presented in the paper (0.0014). This is due to the random process of permutation. I was therefore interested what would happen if I'd repeat this test over and over again, and create a long vector of p-values (for 100 times, otherwise it would take forever and freeze your computer)
 
 ```{r}
-x<-NULL
-for(i in 1000){
-x[i]<-paired.perm.test(donor.durations,n.perm=5000)
+p.values<-NULL
+for(i in 1:100){
+p.values[i]<-paired.perm.test(donor.durations,n.perm=5000)
 }
-x
+p.values
+hist(p.values, cex=0.4)
+summary(p.values>0.05) # Are there values above alpha = 0.05?
+
+# Calculate some basic statistics from this distribution
+m<-round(mean(p.values),digits=4)
+s<-round(sd(p.values),digits=4)
+n<-length(p.values)
+v<-round(var(p.values), digits=6)
+e<-round(sqrt(v/n), digits=6)
+upper<-round((m + qnorm(0.975, mean = 0, sd = 1) * e),digits=4)
+lower<-round((m + qnorm(0.025, mean = 0, sd = 1) * e),digits=4)
+
+Results<-cbind(m,s,n,v,e,upper,lower)
+colnames(Results)<-c("mean", "s.deviation", "n", "variance", "s.error", "upper.Ci", "lower.Ci")
+rownames(Results)<-c("statistic")
+Results
 ```
+A 100 times repetition of this permutated paired t-test shows that no p-value falls over the choosen alpha-value of 0.05. I also calculated descriptive statistics for the distribution. The distribution looks almost normal (repeating the loop more often would have improved this). 
 
 ### Past donor experiment - duration, more conservative Wilcoxon signed-rank test
 The authors state that resampling tests can be problematic when a sample is too small (<20, as in one of our cases) and therefore provide more conservative p-values using a non-parametric Wilcoxon signed rank test. I will also repeat this analysis. 
