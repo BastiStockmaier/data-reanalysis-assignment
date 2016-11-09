@@ -45,7 +45,7 @@ I will start with uploading the dataset provided by the authors and by installin
 # required packages
 install.packages("ggplot2",repos="http://cran.us.r-project.org")
 library(ggplot2)
-install.packages("curl")
+install.packages("curl",repos="http://cran.us.r-project.org")
 library(curl)
 install.packages("boot",repos="http://cran.us.r-project.org")
 library(boot)
