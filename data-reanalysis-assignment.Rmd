@@ -22,7 +22,8 @@ Animals living with kin and nonkin should make social decisions based on the con
 ## Short description of the Method (Playback experiment).
 A subject bat was placed in a maze (see below) with five arms that allowed the subject to move forwards, backward, left, right or upwards. The bat was placed in the arm farthest from the camera, equidistant to the two speakers. After moving forward, it could enter the arms to the left or right, with each option leading towards a speaker simultaneously playing calls from either a control bat or a test bat. The bat could also move straight backwards or forwards away from either speaker, or climb upwards, which bats typically do as an escape response. Those options allowed to remove cases where bats where not motivated. Each trial lasted 10 minutes (600 seconds). If the bat didn't make a choice in the first trial, the trial was discarded and a new trial began. Stimuli were presented on the left or right randomly. Maze was rotated 90 degree clockwise between each trial and the two trial types were presented on a random schedule to prevent order effects.
 
-<img src="img/maze.jpg", width="600px"
+<img src="img/maze.jpg", width="400px">
+
 Figure 1: Playback maze
 
 ### Experiment 1 (Past donor)
@@ -99,7 +100,7 @@ p
 ```
 For comparison, I will attach the original figure to this file (HTML knit):
 
-<img src="img/response.plots.jpg", width="600px"
+<img src="img/response.plots.jpg", width="400px">
 
 Figure 2: Results of playback tests showing (a) the difference in time spent in each arm and (b) the difference in latency to enter each arm for male (blue) and female (red) vampire bats in response to calls from frequent food donors (donor test) and close relatives (kinship test). Shading shows the probability density function. Results remained the same with or without the two outliers in (a). Adapted from Carter & Wilkinson 2016. 
 
